@@ -14,9 +14,9 @@ These instructions will help you get a copy of the project up and running on you
 
 ### Prerequisites
 
-- Java JDK 11 or newer
+- Java JDK 21
 - Maven 3.6.3 or newer
-- Spring Boot 2.3.0.RELEASE or newer
+- Spring Boot 3.2.0 or newer
 
 ### Installation
 
@@ -54,8 +54,11 @@ Request body:
 }
 ```
 
-### Viewing Cart Contents
+### Viewing Cart Contents
 GET /api/cart
 
-### Calculating Total Price
+### Calculating Total Price
 GET /api/cart/total
+
+### Running tests
+`./mvnw test`
