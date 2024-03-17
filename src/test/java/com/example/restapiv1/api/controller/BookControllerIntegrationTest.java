@@ -52,7 +52,7 @@ public class BookControllerIntegrationTest {
     @Test
     public void givenGetAllBooks_whenAllBooksFound_thenReturnListOfBooks() throws Exception {
 
-        mockMvc.perform(get("/books/getAllBooks"))
+        mockMvc.perform(get("/books/"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect((ResultMatcher) jsonPath("$[0].title", is(bookOne.getTitle())))
@@ -62,7 +62,7 @@ public class BookControllerIntegrationTest {
     @Test
     public void givenGetBookById_whenBookFound_thenReturnBook() throws Exception {
 
-        mockMvc.perform(get("/books/getBookById/" + bookOne.getId()))
+        mockMvc.perform(get("/books/" + bookOne.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(bookOne.getId()))
                 .andExpect(jsonPath("$.title").value(bookOne.getTitle()))
@@ -78,7 +78,7 @@ public class BookControllerIntegrationTest {
         jsonRequest.put("author", "Author3");
         jsonRequest.put("price", 9.99);
         jsonRequest.put("category", "Category1");
-        mockMvc.perform(post("/books/addBook")
+        mockMvc.perform(post("/books/")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest.toString()))
                 .andExpect(status().isOk())

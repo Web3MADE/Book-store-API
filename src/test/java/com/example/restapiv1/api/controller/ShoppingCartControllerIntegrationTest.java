@@ -64,7 +64,7 @@ public class ShoppingCartControllerIntegrationTest {
     @Test
     public void givenAddBookToCart_whenBookAdded_returnCartItem() throws Exception {
         int quantity = 5;
-        mockMvc.perform((post("/cart/addBookToCart/{id}/quantity/{quantity}", book.getId(), quantity)))
+        mockMvc.perform((post("/cart/{id}/quantity/{quantity}", book.getId(), quantity)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(cartItem.getId()))
                 .andExpect(jsonPath("$.book.id").value(cartItem.getBook().getId()))
@@ -74,7 +74,7 @@ public class ShoppingCartControllerIntegrationTest {
     @Test
     public void getCartItems_whenCartHasBook_ReturnsOkWithContent() throws Exception {
 
-        mockMvc.perform(get("/cart/getCartItems"))
+        mockMvc.perform(get("/cart/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$[0].id", is(cartItem.getId().intValue())))
@@ -87,7 +87,7 @@ public class ShoppingCartControllerIntegrationTest {
     @Test
     public void givenGetTotalPrice_whenCartHasItems_thenReturnTotalPrice() throws Exception {
         BigDecimal expectedTotalPrice = new BigDecimal("39.98");
-        mockMvc.perform(get("/cart/getTotalPrice"))
+        mockMvc.perform(get("/cart/total"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$").value(expectedTotalPrice.toString())); // Check the total price value
