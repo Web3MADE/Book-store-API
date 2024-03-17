@@ -42,7 +42,7 @@ Request body:
 }
 ```
 
-### Adding a Book to the Shopping Cart
+### Adding a Book to the Shopping Cart
 
 POST `/api/cart/add`
 
