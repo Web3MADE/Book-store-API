@@ -43,6 +43,7 @@ public class BookController {
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         try {
             Optional<Book> bookData = bookService.getBookById(id);
+            System.out.println("bookData by ID " + bookData);
 
             if (bookData.isPresent()) {
                 return new ResponseEntity<>(bookData.get(), HttpStatus.OK);

@@ -21,5 +21,12 @@ public class Book {
     private String author;
     private BigDecimal price;
     private String category;
+
+    public Book(String title, String author, BigDecimal price, String category) {
+        this.title = title;
+        this.author = author;
+        this.price = price;
+        this.category = category;
+    }
 }
 

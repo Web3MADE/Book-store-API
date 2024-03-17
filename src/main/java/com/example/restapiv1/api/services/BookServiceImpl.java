@@ -25,7 +25,6 @@ public class BookServiceImpl implements BookService {
     public Optional<Book> getBookById(Long id) {
         return bookRepository.findById(id);
     }
-    // TODO: don't even need this logic for the task
     public Book updateBook(Book oldBookData, Book newBookData) {
         oldBookData.setTitle(newBookData.getTitle());
         oldBookData.setAuthor((newBookData.getAuthor()));

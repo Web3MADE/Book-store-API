@@ -1,7 +1,9 @@
 package com.example.restapiv1.api.controller;
 
 import com.example.restapiv1.api.interfaces.ShoppingCartService;
+import com.example.restapiv1.api.model.Book;
 import com.example.restapiv1.api.model.CartItem;
+import com.example.restapiv1.api.services.BookServiceImpl;
 import com.example.restapiv1.api.services.ShoppingCartServiceImpl;
 import com.example.restapiv1.api.services.ShoppingCartServiceImpl;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 // TODO: implement timeouts and asynchronous calls to prevent spam attacks
 @RestController
@@ -17,9 +20,12 @@ import java.util.List;
 public class ShoppingCartController {
 
     private final ShoppingCartServiceImpl shoppingCartServiceImpl;
+    // TODO: finish bookserviceimpl name update
+    private final BookServiceImpl bookServiceImpl;
 
-    public ShoppingCartController(ShoppingCartServiceImpl shoppingCartServiceImpl) {
+    public ShoppingCartController(ShoppingCartServiceImpl shoppingCartServiceImpl, BookServiceImpl bookServiceImpl) {
         this.shoppingCartServiceImpl = shoppingCartServiceImpl;
+        this.bookServiceImpl = bookServiceImpl;
     }
 
     @GetMapping("/getCartItems")
@@ -43,10 +49,16 @@ public class ShoppingCartController {
         return new ResponseEntity<>(totalPrice, HttpStatus.OK);
     }
 
-    @PostMapping("/addBookToCart/{id}/quantity/{quantity}")
-    public ResponseEntity<CartItem> addBookToCart(@PathVariable Long id, @PathVariable int quantity) {
+    @PostMapping("/addBookToCart/{bookId}/quantity/{quantity}")
+    public ResponseEntity<CartItem> addBookToCart(@PathVariable Long bookId, @PathVariable int quantity) {
         try {
-            CartItem addedCartItem = shoppingCartServiceImpl.addBookToCart(id, quantity);
+            Optional<Book> bookOptional = bookServiceImpl.getBookById(bookId);
+            if (bookOptional.isEmpty()) {
+                throw new RuntimeException("Book not found");
+            }
+
+            Book book = bookOptional.get();
+            CartItem addedCartItem = shoppingCartServiceImpl.addBookToCart(book, quantity);
 
             return new ResponseEntity<>(addedCartItem, HttpStatus.OK);
 

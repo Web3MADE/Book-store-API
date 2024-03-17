@@ -15,22 +15,12 @@ import java.util.Optional;
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final CartItemRepository cartItemRepository;
-    private final BookService bookService;
 
-
-    public ShoppingCartServiceImpl(CartItemRepository cartItemRepository, BookService bookService) {
+    public ShoppingCartServiceImpl(CartItemRepository cartItemRepository ) {
         this.cartItemRepository = cartItemRepository;
-        this.bookService = bookService;
     }
-
-    public CartItem addBookToCart(Long bookId, int quantity) {
-        Optional<Book> bookOptional = bookService.getBookById(bookId);
-        if (bookOptional.isEmpty()) {
-            throw new RuntimeException("Book not found");
-        }
-        Book book = bookOptional.get();
-
-        Optional<CartItem> existingCartItem = cartItemRepository.findById(bookId);
+    public CartItem addBookToCart(Book book, int quantity) {
+        Optional<CartItem> existingCartItem = cartItemRepository.findByBook(book);
         CartItem cartItem;
 
         if (existingCartItem.isPresent()) {

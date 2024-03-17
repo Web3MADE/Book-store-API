@@ -2,6 +2,7 @@ package com.example.restapiv1.api.controller;
 
 import com.example.restapiv1.api.model.Book;
 import com.example.restapiv1.api.model.CartItem;
+import com.example.restapiv1.api.services.BookServiceImpl;
 import com.example.restapiv1.api.services.ShoppingCartServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,8 +16,10 @@ import org.springframework.http.ResponseEntity;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 
@@ -25,6 +28,8 @@ public class ShoppingCartControllerTest {
 
     @Mock
     private ShoppingCartServiceImpl shoppingCartServiceImpl;
+    @Mock
+    private BookServiceImpl bookServiceImpl;
 
     @InjectMocks
     private ShoppingCartController shoppingCartController;
@@ -57,5 +62,18 @@ public class ShoppingCartControllerTest {
         ResponseEntity<BigDecimal> response = shoppingCartController.getTotalPrice();
 
         assertEquals(response.getBody(), new BigDecimal(100));
+    }
+
+    @Test
+    void givenAddBookToCart_whenBookAdded_thenReturnCartItem() {
+        int mockQuantity = 1;
+        Book mockBook = new Book(1L, "testTitle", "author", new BigDecimal(100), "category");
+        CartItem mockCartItem = new CartItem(mockBook, mockQuantity);
+        when(bookServiceImpl.getBookById(mockBook.getId())).thenReturn(Optional.of(mockBook));
+        when(shoppingCartServiceImpl.addBookToCart(mockBook, mockQuantity)).thenReturn(mockCartItem);
+
+        ResponseEntity<CartItem> response = shoppingCartController.addBookToCart(mockBook.getId(), mockQuantity);
+
+        assertEquals(response.getBody(), mockCartItem);
     }
 }

@@ -32,7 +32,6 @@ class BookServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        // Initialize your mock data here - for example, a list of books
         bookOne = new Book(1L, "Book Title One", "Author One", new BigDecimal("15.99"), "Genre One");
         bookTwo = new Book(2L, "Book Title Two", "Author Two", new BigDecimal("9.99"), "Genre Two");
 ;        mockBooks = Arrays.asList(
@@ -42,13 +41,10 @@ class BookServiceImplTest {
 
     @Test
     void whenGetAllBooks_thenReturnAllBooks() {
-        // Arrange
         when(bookRepository.findAll()).thenReturn(mockBooks);
 
-        // Act
         List<Book> result = bookService.getAllBooks();
 
-        // Assert
         assertEquals(mockBooks.size(), result.size(), "The size of the returned book list should match the mock");
         assertEquals(mockBooks, result, "The returned book list should match the mock books");
     }

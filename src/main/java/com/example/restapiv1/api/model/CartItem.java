@@ -17,4 +17,9 @@ public class CartItem {
     @ManyToOne
     private Book book;
     private int quantity;
+
+    public CartItem(Book book, int cartItemQuantity) {
+        this.book = book;
+        this.quantity = cartItemQuantity;
+    }
 }
