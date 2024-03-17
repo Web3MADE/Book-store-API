@@ -22,9 +22,8 @@ import java.math.BigDecimal;
 
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
@@ -86,5 +85,28 @@ public class BookControllerIntegrationTest {
                 .andExpect(jsonPath("$.author").value("Author3"))
                 .andExpect(jsonPath("$.price").value(9.99))
                 .andExpect(jsonPath("$.category").value("Category1"));
+    }
+
+    @Test
+    public void givenUpdateBookById_whenBookUpdated_thenReturnUpdatedBook() throws Exception {
+        JSONObject jsonRequest = new JSONObject();
+        jsonRequest.put("title", "Book3");
+        jsonRequest.put("author", "Author3");
+        jsonRequest.put("price", 9.99);
+        jsonRequest.put("category", "Category1");
+        mockMvc.perform(put("/books/" + bookOne.getId())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonRequest.toString()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Book3"))
+                .andExpect(jsonPath("$.author").value("Author3"))
+                .andExpect(jsonPath("$.price").value(9.99))
+                .andExpect(jsonPath("$.category").value("Category1"));
+    }
+
+    @Test
+    public void givenDeleteBookById_whenBookDeleted_thenReturnStatusOk() throws Exception {
+        mockMvc.perform(delete("/books/" + bookOne.getId()))
+                .andExpect(status().isOk());
     }
 }
