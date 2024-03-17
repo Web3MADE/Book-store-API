@@ -31,7 +31,7 @@ public class ShoppingCartController {
         this.bookServiceImpl = bookServiceImpl;
     }
 
-    @GetMapping("/getCartItems")
+    @GetMapping("/")
     @Operation(
             summary = "Get all cart items",
             description = "Get all cart items"
@@ -54,7 +54,7 @@ public class ShoppingCartController {
         }
     }
 
-    @GetMapping("/getTotalPrice")
+    @GetMapping("/total")
     @Operation(
             summary = "Get total price of cart",
             description = "Get total price of cart items"
@@ -68,7 +68,7 @@ public class ShoppingCartController {
         return new ResponseEntity<>(totalPrice, HttpStatus.OK);
     }
 
-    @PostMapping("/addBookToCart/{bookId}/quantity/{quantity}")
+    @PostMapping("/{bookId}/quantity/{quantity}")
     @Operation(
             summary = "Add book to cart",
             description = "Add book to cart"

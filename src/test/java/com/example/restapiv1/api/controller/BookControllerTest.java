@@ -29,18 +29,13 @@ class BookControllerTest {
 
     @Test
     void givenGetAllBooks_whenBooksExist_thenStatusOk() {
-        // Arrange
         List<Book> books = new ArrayList<>();
         books.add(new Book(1L, "testTitle", "author", new BigDecimal(100), "category"));
         books.add(new Book(2L, "testTitle", "author", new BigDecimal(200), "category"));
-
-        // similar to jest.mockReturnValue
         when(bookService.getAllBooks()).thenReturn(books);
 
-        // Act
         ResponseEntity<List<Book>> response = bookController.getAllBooks();
 
-        // Assert
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertFalse(response.getBody().isEmpty());
@@ -48,9 +43,7 @@ class BookControllerTest {
 
     @Test
     void givenGetAllBooks_whenNoBooksExist_thenStatusNoContent() {
-        // Arrange
         List<Book> books = new ArrayList<>();
-
         when(bookService.getAllBooks()).thenReturn(books);
 
         ResponseEntity<List<Book>> response = bookController.getAllBooks();

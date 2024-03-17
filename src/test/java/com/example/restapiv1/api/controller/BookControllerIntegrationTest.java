@@ -61,7 +61,6 @@ public class BookControllerIntegrationTest {
 
     @Test
     public void givenGetBookById_whenBookFound_thenReturnBook() throws Exception {
-        System.out.println("bookOneID " + bookOne.getId());
 
         mockMvc.perform(get("/books/getBookById/" + bookOne.getId()))
                 .andExpect(status().isOk())

@@ -27,7 +27,7 @@ public class BookController {
     public BookController(BookServiceImpl bookService) {
         this.bookService = bookService;
     }
-    @GetMapping("/getAllBooks")
+    @GetMapping("/")
     @Operation(
             summary = "Get all books",
             description = "Get all books"
@@ -50,7 +50,7 @@ public class BookController {
         }
 
     }
-    @GetMapping("/getBookById/{id}")
+    @GetMapping("/{id}")
     @Operation(
             summary = "Get a book",
             description = "Get a book by its id"
@@ -74,7 +74,7 @@ public class BookController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @PostMapping("/addBook")
+    @PostMapping("/")
     @Operation(
             summary = "Add a new book",
             description = "Add a new book"
@@ -88,7 +88,7 @@ public class BookController {
 
         return new ResponseEntity<>(bookObj, HttpStatus.OK);
     }
-    @PostMapping("/updateBookById/{id}")
+    @PutMapping("/{id}")
     @Operation(
             summary = "Update a book",
             description = "Update a book by its id"
@@ -111,7 +111,7 @@ public class BookController {
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
     }
-    @DeleteMapping("/deleteBookById/{id}")
+    @DeleteMapping("/{id}")
     @Operation(
             summary = "Delete a book",
             description = "Delete book by its id"

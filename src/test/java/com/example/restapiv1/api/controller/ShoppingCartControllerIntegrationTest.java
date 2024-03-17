@@ -60,9 +60,7 @@ public class ShoppingCartControllerIntegrationTest {
         cartItemRepository.deleteAll();
         bookRepository.deleteAll();
     }
-    // TODO: finish addBookToCart and getTotalPrice tests
-    //  then clean up entire codebase and document API in Swagger
-    //   Finally, create solid documentation and justifications for selected approach and alternatives
+
     @Test
     public void givenAddBookToCart_whenBookAdded_returnCartItem() throws Exception {
         int quantity = 5;
@@ -73,7 +71,6 @@ public class ShoppingCartControllerIntegrationTest {
                 .andExpect(jsonPath("$.quantity", is(quantity + CART_ITEM_QUANTITY)));
 
     }
-    // TODO: FIX this auto-increment issue on mvnw clean install
     @Test
     public void getCartItems_whenCartHasBook_ReturnsOkWithContent() throws Exception {
 

@@ -82,7 +82,6 @@ class ShoppingCartServiceImplTest {
 
         BigDecimal totalPrice = shoppingCartService.getTotalPrice();
 
-        System.out.println(totalPrice);
         assertEquals(new BigDecimal("35.97"), totalPrice);
     }
 
