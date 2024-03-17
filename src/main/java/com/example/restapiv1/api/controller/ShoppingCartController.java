@@ -18,14 +18,12 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-// TODO: implement timeouts and asynchronous calls to prevent spam attacks
 @RestController
 @RequestMapping("/cart")
 @Tag(name = "Shopping Cart", description = "The Shopping Cart API")
 public class ShoppingCartController {
 
     private final ShoppingCartServiceImpl shoppingCartServiceImpl;
-    // TODO: finish bookserviceimpl name update
     private final BookServiceImpl bookServiceImpl;
 
     public ShoppingCartController(ShoppingCartServiceImpl shoppingCartServiceImpl, BookServiceImpl bookServiceImpl) {

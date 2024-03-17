@@ -17,7 +17,6 @@ public class CartItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty(notes = "This is an auto-generated ID for a cart item")
     private Long id;
-    // Many cart items can refer to one book
     @ManyToOne
     @ApiModelProperty(notes = "This is the book contained by the cart")
     private Book book;

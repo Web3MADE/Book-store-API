@@ -18,13 +18,10 @@ import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-// TODO: refactor controller logic into bookService later
 @RestController
 @RequestMapping("/books")
 @Tag(name = "Bookstore", description = "The Bookstore API")
 public class BookController {
-    // BookController depends on BookRepository, Spring's DI container will inject an instance of BookRepository into BookController
-    // when it creates the controller bean
     private final BookServiceImpl bookService;
 
     public BookController(BookServiceImpl bookService) {
@@ -42,13 +39,11 @@ public class BookController {
     })
     public ResponseEntity<List<Book>> getAllBooks() {
         try {
-            // call bookService to get all books
             List<Book> bookList = bookService.getAllBooks();
 
             if (bookList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-            // @DEV can we instantiate ResonseEntity once and just set statuses cleaner?
             return new ResponseEntity<>(bookList, HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -68,7 +63,6 @@ public class BookController {
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         try {
             Optional<Book> bookData = bookService.getBookById(id);
-            System.out.println("bookData by ID " + bookData);
 
             if (bookData.isPresent()) {
                 return new ResponseEntity<>(bookData.get(), HttpStatus.OK);

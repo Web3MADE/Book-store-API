@@ -11,7 +11,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication
-//@EnableSwagger2
 public class RestApiV1Application {
 
     public static void main(String[] args) {

@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ExtendWith(SpringExtension.class)
-@SpringBootTest // Setup full application context
+@SpringBootTest
 @AutoConfigureMockMvc
 public class BookControllerIntegrationTest {
 
@@ -39,7 +39,6 @@ public class BookControllerIntegrationTest {
     private BookRepository bookRepository;
     Book   bookOne;
     Book bookTwo;
-    // TODO: fix auto-increment id issue for integration tests
     @BeforeEach
     public void setup() {
         bookOne = bookRepository.save(new Book( "Book1", "Author1", new BigDecimal("9.99"), "Category1"));
@@ -50,7 +49,6 @@ public class BookControllerIntegrationTest {
     public void cleanup() {
         bookRepository.deleteAll();
     }
-    // TODO: fix this 404 error on mvnw clean install
     @Test
     public void givenGetAllBooks_whenAllBooksFound_thenReturnListOfBooks() throws Exception {
 
@@ -76,13 +74,11 @@ public class BookControllerIntegrationTest {
 
     @Test
     public void givenAddBook_whenBookAdded_thenReturnAddedBook() throws Exception {
-        // Given
         JSONObject jsonRequest = new JSONObject();
         jsonRequest.put("title", "Book3");
         jsonRequest.put("author", "Author3");
         jsonRequest.put("price", 9.99);
         jsonRequest.put("category", "Category1");
-        // When & Then
         mockMvc.perform(post("/books/addBook")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonRequest.toString()))

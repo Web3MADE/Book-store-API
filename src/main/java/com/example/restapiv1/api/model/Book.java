@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-// AllArgsConstructor = generates constructor with one argument for each field in class without manually assigning it
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,8 +13,6 @@ import java.math.BigDecimal;
 @ToString
 @ApiModel(description = "This table holds Book information")
 public class Book {
-    // @Id = primary key of Book Entity
-    // @GeneratedValue = simplifies the generation of unique primary key
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
