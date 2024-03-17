@@ -1,5 +1,6 @@
 package com.example.restapiv1.api.model;
 
+import io.swagger.annotations.ApiModel;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
+@ApiModel(description = "This table holds Book information")
 public class Book {
     // @Id = primary key of Book Entity
     // @GeneratedValue = simplifies the generation of unique primary key

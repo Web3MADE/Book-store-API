@@ -6,6 +6,10 @@ import com.example.restapiv1.api.model.CartItem;
 import com.example.restapiv1.api.services.BookServiceImpl;
 import com.example.restapiv1.api.services.ShoppingCartServiceImpl;
 import com.example.restapiv1.api.services.ShoppingCartServiceImpl;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +21,7 @@ import java.util.Optional;
 // TODO: implement timeouts and asynchronous calls to prevent spam attacks
 @RestController
 @RequestMapping("/cart")
+@Tag(name = "Shopping Cart", description = "The Shopping Cart API")
 public class ShoppingCartController {
 
     private final ShoppingCartServiceImpl shoppingCartServiceImpl;
@@ -29,6 +34,14 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/getCartItems")
+    @Operation(
+            summary = "Get all cart items",
+            description = "Get all cart items"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Cart items successfully fetched from database"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
     public ResponseEntity<List<CartItem>> getCartItems() {
         try {
             List<CartItem> cartItems = shoppingCartServiceImpl.getCartItems();
@@ -44,12 +57,28 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/getTotalPrice")
+    @Operation(
+            summary = "Get total price of cart",
+            description = "Get total price of cart items"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Successfully calculated total price"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
     public ResponseEntity<BigDecimal> getTotalPrice() {
         BigDecimal totalPrice = shoppingCartServiceImpl.getTotalPrice();
         return new ResponseEntity<>(totalPrice, HttpStatus.OK);
     }
 
     @PostMapping("/addBookToCart/{bookId}/quantity/{quantity}")
+    @Operation(
+            summary = "Add book to cart",
+            description = "Add book to cart"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Book successfully added to cart"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
     public ResponseEntity<CartItem> addBookToCart(@PathVariable Long bookId, @PathVariable int quantity) {
         try {
             Optional<Book> bookOptional = bookServiceImpl.getBookById(bookId);
